@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="public/build/assets/ApplicationLogo-CnD7888Y.js" width="150" alt="SAPA Logo">
+  <img src="public/images/logo.png" width="150" alt="SAPA Logo">
 </p>
 
 # SAPA - Sistem Aduan dan Pengaduan Aspirasi
@@ -71,6 +71,37 @@ SAPA adalah sebuah platform berbasis web yang dirancang khusus untuk mahasiswa a
    - Terminal 2 (Frontend): `npm run dev`
 
 7. Akses aplikasi melalui `http://localhost:8000`
+
+## Menjalankan Proyek dengan Docker (Laravel Sail)
+Jika Anda lebih suka menggunakan Docker, Laravel Sail sudah tersedia di proyek ini.
+
+1. **Pastikan Docker Desktop sudah berjalan di perangkat Anda.**
+2. **Install dependensi awal (jika belum):**
+   ```bash
+   composer install
+   npm install
+   ```
+3. **Konfigurasi Environment:**
+   Duplikat file `.env.example` menjadi `.env` lalu sesuaikan untuk Sail:
+   ```env
+   DB_CONNECTION=mysql
+   DB_HOST=mysql
+   DB_PORT=3306
+   DB_DATABASE=sapa
+   DB_USERNAME=sail
+   DB_PASSWORD=password
+   ```
+4. **Jalankan Sail (Docker Containers):**
+   ```bash
+   ./vendor/bin/sail up -d
+   ```
+5. **Migrasi Database & Build Aset Frontend:**
+   ```bash
+   ./vendor/bin/sail artisan migrate
+   ./vendor/bin/sail npm run build
+   ```
+6. **Akses aplikasi:** Buka `http://localhost` di browser Anda.
+*(Untuk menghentikan Sail, jalankan `./vendor/bin/sail down`)*
 
 ## Berkontribusi (Dev Branch)
 Jika Anda ingin berkontribusi pada proyek ini, harap lakukan di branch `dev`.
