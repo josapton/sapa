@@ -8,12 +8,14 @@ SAPA adalah sebuah platform berbasis web yang dirancang khusus untuk mahasiswa a
 
 ## Fitur Utama
 - **Sistem Pseudonim:** Identitas mahasiswa disamarkan (misalnya "Anonim 231" atau pseudonim unik dari sistem) untuk melindungi privasi pelapor.
-- **Manajemen Aduan:** Mahasiswa dapat membuat, mengedit, dan menghapus aduan mereka.
-- **Kategori Aduan:** Laporan dapat dikategorikan (Fasilitas, Akademik, Pelayanan, dll.) untuk memudahkan penanganan.
+- **Manajemen Aduan:** Mahasiswa dapat membuat, mengedit, dan menghapus aduan/laporan mereka.
+- **Kategori Aduan:** Laporan dikategorikan (Fasilitas, Akademik, Pelayanan, dll.) untuk memudahkan penanganan.
 - **Lampiran Bukti:** Dukungan untuk mengunggah foto atau dokumen sebagai bukti laporan.
-- **Sistem Dukungan (Upvote):** Mahasiswa lain dapat memberikan dukungan (like) dan komentar pada laporan yang bersifat publik.
-- **Keamanan:** Dilengkapi dengan verifikasi pendaftaran melalui OTP (Email) dan perlindungan form menggunakan Captcha Matematika.
-- **Tampilan Dinamis (Dark Mode):** Tampilan antarmuka yang modern, responsif, dan mendukung mode gelap (_dark mode_) yang menyesuaikan dengan preferensi perangkat pengguna.
+- **Sistem Dukungan & Interaksi:** Mahasiswa lain dapat memberikan dukungan (_upvote_) dan memberikan komentar pada laporan yang bersifat publik.
+- **Manajemen Role & Hak Akses:** Sistem role-based access control (RBAC) memisahkan akses untuk Mahasiswa, Dosen, Admin, dan Super Admin dengan manajemen _user_ yang terpusat.
+- **Syarat dan Ketentuan Pelaporan:** Dilengkapi dengan persetujuan syarat & ketentuan (_Terms & Conditions_) sebelum membuat laporan untuk menjaga etika dan ketertiban.
+- **Keamanan:** Dilengkapi dengan verifikasi pendaftaran melalui sistem OTP (melalui Email) dan perlindungan formulir otentikasi menggunakan _Captcha_ Matematika.
+- **Tampilan Dinamis (Dark Mode):** Tampilan antarmuka (UI) yang modern, bersih (_clean_), responsif untuk perangkat mobile (dengan _floating dropdown menu_), dan mendukung mode gelap (_dark mode_) yang menyesuaikan dengan preferensi perangkat atau sistem operasi pengguna.
 
 ## Teknologi yang Digunakan
 - **Backend:** [Laravel 11](https://laravel.com)
@@ -46,7 +48,7 @@ SAPA adalah sebuah platform berbasis web yang dirancang khusus untuk mahasiswa a
    ```bash
    cp .env.example .env
    ```
-   Atur koneksi database (misal MySQL) pada file `.env`:
+   Lalu konfigurasikan database dan pengaturan SMTP Mailer di file `.env`. Untuk environment lokal yang menggunakan Docker/Sail, Mailpit sudah disediakan secara bawaan untuk pengujian email (OTP/Notifikasi):
    ```env
    DB_CONNECTION=mysql
    DB_HOST=127.0.0.1
@@ -54,6 +56,15 @@ SAPA adalah sebuah platform berbasis web yang dirancang khusus untuk mahasiswa a
    DB_DATABASE=sapa
    DB_USERNAME=root
    DB_PASSWORD=
+
+   MAIL_MAILER=smtp
+   MAIL_HOST=mailpit
+   MAIL_PORT=1025
+   MAIL_USERNAME=null
+   MAIL_PASSWORD=null
+   MAIL_ENCRYPTION=null
+   MAIL_FROM_ADDRESS="hello@example.com"
+   MAIL_FROM_NAME="${APP_NAME}"
    ```
 
 4. **Generate Application Key:**
@@ -61,9 +72,10 @@ SAPA adalah sebuah platform berbasis web yang dirancang khusus untuk mahasiswa a
    php artisan key:generate
    ```
 
-5. **Jalankan Migrasi Database:**
+5. **Jalankan Migrasi & Seeder Database:**
+   (Untuk mengisi data awal seperti kamus pseudonim dan akun admin)
    ```bash
-   php artisan migrate
+   php artisan migrate --seed
    ```
 
 6. **Jalankan Server:**
@@ -74,7 +86,7 @@ SAPA adalah sebuah platform berbasis web yang dirancang khusus untuk mahasiswa a
 7. Akses aplikasi melalui `http://localhost:8000`
 
 ## Menjalankan Proyek dengan Docker (Laravel Sail)
-Jika Anda lebih suka menggunakan Docker, Laravel Sail sudah tersedia di proyek ini.
+Jika Anda lebih suka menggunakan Docker, Laravel Sail sudah disiapkan dan dikonfigurasi di dalam proyek ini.
 
 1. **Pastikan Docker Desktop sudah berjalan di perangkat Anda.**
 2. **Install dependensi awal (jika belum):**
@@ -83,7 +95,7 @@ Jika Anda lebih suka menggunakan Docker, Laravel Sail sudah tersedia di proyek i
    npm install
    ```
 3. **Konfigurasi Environment:**
-   Duplikat file `.env.example` menjadi `.env` lalu sesuaikan untuk Sail:
+   Duplikat file `.env.example` menjadi `.env` lalu sesuaikan untuk Sail (gunakan host `mysql`):
    ```env
    DB_CONNECTION=mysql
    DB_HOST=mysql
@@ -98,10 +110,11 @@ Jika Anda lebih suka menggunakan Docker, Laravel Sail sudah tersedia di proyek i
    ```
 5. **Migrasi Database & Build Aset Frontend:**
    ```bash
-   ./vendor/bin/sail artisan migrate
+   ./vendor/bin/sail artisan migrate --seed
    ./vendor/bin/sail npm run build
    ```
 6. **Akses aplikasi:** Buka `http://localhost` di browser Anda.
+7. **Testing Email (Mailpit):** Anda dapat melihat semua email (OTP/Reset Password) yang keluar secara lokal dengan membuka _dashboard_ Mailpit di `http://localhost:8025`.
 *(Untuk menghentikan Sail, jalankan `./vendor/bin/sail down`)*
 
 ## Berkontribusi (Dev Branch)
