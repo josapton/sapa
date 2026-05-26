@@ -58,7 +58,7 @@ export default function Pseudonyms({ auth, pseudonyms }) {
     return (
         <AuthenticatedLayout
             user={auth.user}
-            header={<h2 className="font-semibold text-xl text-gray-800 leading-tight">Kamus Nama</h2>}
+            header={<h2 className="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">Kamus Nama</h2>}
         >
             <Head title="Kamus Nama Samaran" />
 
@@ -66,7 +66,7 @@ export default function Pseudonyms({ auth, pseudonyms }) {
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     
                     <div className="flex justify-between items-center mb-6">
-                        <h3 className="text-2xl font-bold text-gray-900">Manajemen Nama Samaran</h3>
+                        <h3 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Manajemen Nama Samaran</h3>
                         <button
                             onClick={openCreate}
                             className="flex items-center space-x-2 bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-lg font-medium shadow-md transition"
@@ -76,18 +76,18 @@ export default function Pseudonyms({ auth, pseudonyms }) {
                         </button>
                     </div>
 
-                    <div className="bg-white overflow-hidden shadow-sm sm:rounded-xl border border-gray-100">
+                    <div className="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-xl border border-gray-100 dark:border-gray-700">
                         <div className="p-6">
                             <div className="overflow-x-auto">
                                 <table className="w-full text-left border-collapse">
                                     <thead>
-                                        <tr className="bg-gray-50 border-y border-gray-100 text-sm text-gray-500 uppercase tracking-wider">
+                                        <tr className="bg-gray-50 dark:bg-gray-900 border-y border-gray-100 dark:border-gray-700 text-sm text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                                             <th className="px-6 py-4 font-medium">Nama Samaran</th>
                                             <th className="px-6 py-4 font-medium">Kategori</th>
                                             <th className="px-6 py-4 font-medium text-right">Aksi</th>
                                         </tr>
                                     </thead>
-                                    <tbody className="divide-y divide-gray-100 text-gray-700">
+                                    <tbody className="divide-y divide-gray-100 dark:divide-gray-700 text-gray-700 dark:text-gray-300">
                                         {pseudonyms.data.length === 0 && (
                                             <tr>
                                                 <td colSpan="3" className="px-6 py-8 text-center text-gray-500 italic">
@@ -96,8 +96,8 @@ export default function Pseudonyms({ auth, pseudonyms }) {
                                             </tr>
                                         )}
                                         {pseudonyms.data.map((p) => (
-                                            <tr key={p.id} className="hover:bg-gray-50/50 transition">
-                                                <td className="px-6 py-4 whitespace-nowrap font-medium text-gray-900">
+                                            <tr key={p.id} className="hover:bg-gray-50/50 dark:hover:bg-gray-700/50 transition">
+                                                <td className="px-6 py-4 whitespace-nowrap font-medium text-gray-900 dark:text-gray-100">
                                                     {p.name}
                                                 </td>
                                                 <td className="px-6 py-4 whitespace-nowrap">
@@ -144,32 +144,32 @@ export default function Pseudonyms({ auth, pseudonyms }) {
             {/* Modal Tambah/Edit */}
             {showModal && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-gray-900/50 backdrop-blur-sm">
-                    <div className="bg-white rounded-2xl w-full max-w-md overflow-hidden shadow-2xl">
-                        <div className="px-6 py-4 border-b border-gray-100 flex justify-between items-center">
-                            <h3 className="text-xl font-bold text-gray-900">{editingId ? 'Edit Nama' : 'Tambah Nama Baru'}</h3>
-                            <button onClick={() => setShowModal(false)} className="text-gray-400 hover:text-gray-600">
+                    <div className="bg-white dark:bg-gray-800 rounded-2xl w-full max-w-md overflow-hidden shadow-2xl border border-gray-100 dark:border-gray-700">
+                        <div className="px-6 py-4 border-b border-gray-100 dark:border-gray-700 flex justify-between items-center">
+                            <h3 className="text-xl font-bold text-gray-900 dark:text-white">{editingId ? 'Edit Nama' : 'Tambah Nama Baru'}</h3>
+                            <button onClick={() => setShowModal(false)} className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300">
                                 <X size={24} />
                             </button>
                         </div>
                         <form onSubmit={submit} className="p-6">
                             <div className="space-y-4">
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-1">Nama</label>
+                                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Nama</label>
                                     <input
                                         type="text"
                                         value={data.name}
                                         onChange={e => setData('name', e.target.value)}
-                                        className="w-full border-gray-300 focus:border-orange-500 focus:ring-orange-500 rounded-md shadow-sm"
+                                        className="w-full border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white focus:border-orange-500 focus:ring-orange-500 rounded-md shadow-sm"
                                         placeholder="Contoh: Harimau"
                                     />
                                     {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name}</p>}
                                 </div>
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-1">Kategori</label>
+                                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Kategori</label>
                                     <select
                                         value={data.category}
                                         onChange={e => setData('category', e.target.value)}
-                                        className="w-full border-gray-300 focus:border-orange-500 focus:ring-orange-500 rounded-md shadow-sm"
+                                        className="w-full border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white focus:border-orange-500 focus:ring-orange-500 rounded-md shadow-sm"
                                     >
                                         <option value="Flora">Flora</option>
                                         <option value="Fauna">Fauna</option>
@@ -180,7 +180,7 @@ export default function Pseudonyms({ auth, pseudonyms }) {
                             </div>
                             
                             <div className="mt-8 flex justify-end space-x-3">
-                                <button type="button" onClick={() => setShowModal(false)} className="px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-lg font-medium transition">
+                                <button type="button" onClick={() => setShowModal(false)} className="px-4 py-2 text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg font-medium transition">
                                     Batal
                                 </button>
                                 <button 

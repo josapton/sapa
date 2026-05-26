@@ -2,7 +2,7 @@
   <img src="public/images/logo.png" width="150" alt="SAPA Logo">
 </p>
 
-# SAPA - Sistem Aduan dan Pengaduan Aspirasi
+# SAPA - Sistem Aduan Aspirasi dan Pelaporan Akademik
 
 SAPA adalah sebuah platform berbasis web yang dirancang khusus untuk mahasiswa agar dapat menyuarakan aspirasi, memberikan aduan, dan melaporkan permasalahan di lingkungan kampus secara aman dan terstruktur.
 
@@ -13,6 +13,7 @@ SAPA adalah sebuah platform berbasis web yang dirancang khusus untuk mahasiswa a
 - **Lampiran Bukti:** Dukungan untuk mengunggah foto atau dokumen sebagai bukti laporan.
 - **Sistem Dukungan (Upvote):** Mahasiswa lain dapat memberikan dukungan (like) dan komentar pada laporan yang bersifat publik.
 - **Keamanan:** Dilengkapi dengan verifikasi pendaftaran melalui OTP (Email) dan perlindungan form menggunakan Captcha Matematika.
+- **Tampilan Dinamis (Dark Mode):** Tampilan antarmuka yang modern, responsif, dan mendukung mode gelap (_dark mode_) yang menyesuaikan dengan preferensi perangkat pengguna.
 
 ## Teknologi yang Digunakan
 - **Backend:** [Laravel 11](https://laravel.com)
@@ -30,7 +31,7 @@ SAPA adalah sebuah platform berbasis web yang dirancang khusus untuk mahasiswa a
 
 1. **Clone repository ini:**
    ```bash
-   git clone https://github.com/username/sapa.git
+   git clone https://github.com/universitas-boyolali/sapa.git
    cd sapa
    ```
 

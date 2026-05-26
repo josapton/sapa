@@ -23,13 +23,7 @@ class RegisteredUserController extends Controller
      */
     public function create(): Response
     {
-        $num1 = rand(1, 9);
-        $num2 = rand(1, 9);
-        session(['captcha_answer' => $num1 + $num2]);
-
-        return Inertia::render('Auth/Register', [
-            'captcha_question' => "Berapa hasil dari $num1 + $num2?",
-        ]);
+        return Inertia::render('Auth/Register');
     }
 
     /**
@@ -43,14 +37,8 @@ class RegisteredUserController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|lowercase|email|max:255|unique:'.User::class,
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            'captcha' => 'required|numeric',
+            'captcha' => 'required|captcha',
         ]);
-
-        if ($request->captcha != session('captcha_answer')) {
-            throw ValidationException::withMessages([
-                'captcha' => 'Jawaban Captcha salah.',
-            ]);
-        }
 
         $dictionaryEntry = \App\Models\PseudonymDictionary::inRandomOrder()->first();
         $pseudonym = $dictionaryEntry ? $dictionaryEntry->name . ' ' . rand(100, 999) : 'Anonim ' . rand(1000, 9999);

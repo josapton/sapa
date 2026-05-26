@@ -5,8 +5,11 @@ import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import GuestLayout from '@/Layouts/GuestLayout';
 import { Head, Link, useForm } from '@inertiajs/react';
+import { ShieldCheck, RefreshCw } from 'lucide-react';
+import { useState } from 'react';
 
-export default function Login({ status, canResetPassword, captcha_question }) {
+export default function Login({ status, canResetPassword }) {
+    const [captchaKey, setCaptchaKey] = useState(Date.now());
     const { data, setData, post, processing, errors, reset } = useForm({
         email: '',
         password: '',
@@ -75,21 +78,43 @@ export default function Login({ status, canResetPassword, captcha_question }) {
                                 setData('remember', e.target.checked)
                             }
                         />
-                        <span className="ms-2 text-sm text-gray-600">
+                        <span className="ms-2 text-sm text-gray-600 dark:text-gray-400">
                             Remember me
                         </span>
                     </label>
                 </div>
 
-                <div className="mt-4">
-                    <InputLabel htmlFor="captcha" value={captcha_question || "Captcha"} />
+                <div className="mt-6 bg-orange-50 dark:bg-orange-900/20 p-4 rounded-lg border border-orange-100 dark:border-orange-900/50">
+                    <div className="flex items-center mb-3 text-orange-800 dark:text-orange-400">
+                        <ShieldCheck size={20} className="mr-2" />
+                        <span className="font-semibold text-sm">Verifikasi Keamanan</span>
+                    </div>
+                    
+                    <div className="flex flex-col items-center mb-4">
+                        <img 
+                            src={`/captcha/flat?${captchaKey}`} 
+                            alt="Captcha" 
+                            className="rounded border border-gray-300 dark:border-gray-600 shadow-sm mb-2"
+                        />
+                        <button 
+                            type="button" 
+                            onClick={() => setCaptchaKey(Date.now())}
+                            className="text-xs text-orange-600 dark:text-orange-400 hover:text-orange-800 dark:hover:text-orange-300 flex items-center"
+                        >
+                            <RefreshCw size={12} className="mr-1" />
+                            Klik untuk ganti gambar
+                        </button>
+                    </div>
+
+                    <InputLabel htmlFor="captcha" value="Masukkan teks dari gambar di atas:" className="text-orange-900 dark:text-orange-100" />
 
                     <TextInput
                         id="captcha"
                         type="text"
                         name="captcha"
                         value={data.captcha}
-                        className="mt-1 block w-full"
+                        className="mt-1 block w-full text-center tracking-widest text-lg"
+                        placeholder="Jawaban Anda"
                         onChange={(e) => setData('captcha', e.target.value)}
                         required
                     />
@@ -100,7 +125,7 @@ export default function Login({ status, canResetPassword, captcha_question }) {
                 <div className="mt-4 flex items-center justify-between">
                     <Link
                         href={route('register')}
-                        className="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2"
+                        className="rounded-md text-sm text-gray-600 dark:text-gray-400 underline hover:text-gray-900 dark:hover:text-gray-100 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800"
                     >
                         Belum punya akun? Daftar
                     </Link>
@@ -109,7 +134,7 @@ export default function Login({ status, canResetPassword, captcha_question }) {
                         {canResetPassword && (
                             <Link
                                 href={route('password.request')}
-                                className="rounded-md text-sm text-gray-600 underline hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2"
+                                className="rounded-md text-sm text-gray-600 dark:text-gray-400 underline hover:text-gray-900 dark:hover:text-gray-100 focus:outline-none focus:ring-2 focus:ring-orange-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800"
                             >
                                 Lupa kata sandi?
                             </Link>
