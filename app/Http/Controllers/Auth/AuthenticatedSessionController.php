@@ -18,14 +18,9 @@ class AuthenticatedSessionController extends Controller
      */
     public function create(): Response
     {
-        $num1 = rand(1, 9);
-        $num2 = rand(1, 9);
-        session(['captcha_answer' => $num1 + $num2]);
-
         return Inertia::render('Auth/Login', [
             'canResetPassword' => Route::has('password.request'),
             'status' => session('status'),
-            'captcha_question' => "Berapa hasil dari $num1 + $num2?",
         ]);
     }
 

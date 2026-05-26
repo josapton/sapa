@@ -85,13 +85,13 @@ export default function SubmissionDetail({ auth, submission }) {
     if (!submission) return null;
 
     return (
-        <div className="min-h-screen bg-gray-50 text-gray-900">
+        <div className="min-h-screen bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-200">
             <Head title={submission?.title || 'Detail Submisi'} />
 
             {/* Navbar */}
             <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
                 <div className="flex justify-between items-center mb-6">
-                    <Link href={auth?.user ? route('dashboard') : route('home')} className="inline-flex items-center space-x-2 text-gray-500 hover:text-orange-600 transition">
+                    <Link href={auth?.user ? route('dashboard') : route('home')} className="inline-flex items-center space-x-2 text-gray-500 dark:text-gray-400 hover:text-orange-600 dark:hover:text-orange-400 transition">
                         <ArrowLeft size={20} />
                         <span>Kembali</span>
                     </Link>
@@ -100,7 +100,7 @@ export default function SubmissionDetail({ auth, submission }) {
                         {isOwner && (
                             <button 
                                 onClick={() => setShowEditModal(true)}
-                                className="inline-flex items-center space-x-2 text-blue-500 hover:text-blue-600 bg-blue-50 hover:bg-blue-100 px-4 py-2 rounded-lg font-medium transition"
+                                className="inline-flex items-center space-x-2 text-blue-500 dark:text-blue-400 hover:text-blue-600 dark:hover:text-blue-300 bg-blue-50 dark:bg-blue-900/20 hover:bg-blue-100 dark:hover:bg-blue-900/40 px-4 py-2 rounded-lg font-medium transition"
                             >
                                 <Edit size={18} />
                                 <span>Edit</span>
@@ -109,7 +109,7 @@ export default function SubmissionDetail({ auth, submission }) {
                         {canDelete && (
                             <button 
                                 onClick={handleDelete}
-                                className="inline-flex items-center space-x-2 text-red-500 hover:text-red-600 bg-red-50 hover:bg-red-100 px-4 py-2 rounded-lg font-medium transition"
+                                className="inline-flex items-center space-x-2 text-red-500 dark:text-red-400 hover:text-red-600 dark:hover:text-red-300 bg-red-50 dark:bg-red-900/20 hover:bg-red-100 dark:hover:bg-red-900/40 px-4 py-2 rounded-lg font-medium transition"
                             >
                                 <Trash2 size={18} />
                                 <span>Hapus</span>
@@ -118,7 +118,7 @@ export default function SubmissionDetail({ auth, submission }) {
                     </div>
                 </div>
 
-                <div className="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden mb-8">
+                <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-sm border border-gray-100 dark:border-gray-700 overflow-hidden mb-8">
                     <div className="p-8">
                         <div className="flex justify-between items-start mb-6">
                             <div className="flex items-center space-x-4">
@@ -126,17 +126,17 @@ export default function SubmissionDetail({ auth, submission }) {
                                     {submission?.user?.pseudonym ? submission.user.pseudonym.charAt(0) : 'U'}
                                 </div>
                                 <div>
-                                    <div className="font-bold text-gray-900 text-lg">{submission?.user?.pseudonym || 'Anonim'}</div>
-                                    <div className="text-sm text-gray-500">
+                                    <div className="font-bold text-gray-900 dark:text-gray-100 text-lg">{submission?.user?.pseudonym || 'Anonim'}</div>
+                                    <div className="text-sm text-gray-500 dark:text-gray-400">
                                         {submission?.created_at && formatDistanceToNow(new Date(submission.created_at), { addSuffix: true, locale: localeId })}
                                     </div>
                                 </div>
                             </div>
                             <div className="flex space-x-2">
                                 <span className={`px-3 py-1 text-sm font-semibold rounded-full ${
-                                    submission?.type === 'laporan' ? 'bg-red-50 text-red-600' :
-                                    submission?.type === 'aduan' ? 'bg-orange-50 text-orange-600' :
-                                    'bg-purple-50 text-purple-600'
+                                    submission?.type === 'laporan' ? 'bg-red-50 dark:bg-red-900/30 text-red-600 dark:text-red-400' :
+                                    submission?.type === 'aduan' ? 'bg-orange-50 dark:bg-orange-900/30 text-orange-600 dark:text-orange-400' :
+                                    'bg-purple-50 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400'
                                 }`}>
                                     {submission?.type ? submission.type.charAt(0).toUpperCase() + submission.type.slice(1) : ''}
                                 </span>
@@ -168,19 +168,19 @@ export default function SubmissionDetail({ auth, submission }) {
                             </div>
                         </div>
 
-                        <h1 className="text-2xl sm:text-3xl font-extrabold text-gray-900 mb-4">{submission?.title}</h1>
-                        <p className="text-gray-700 whitespace-pre-wrap leading-relaxed mb-6">{submission?.content}</p>
+                        <h1 className="text-2xl sm:text-3xl font-extrabold text-gray-900 dark:text-white mb-4">{submission?.title}</h1>
+                        <p className="text-gray-700 dark:text-gray-300 whitespace-pre-wrap leading-relaxed mb-6">{submission?.content}</p>
 
                         {submission?.attachments?.map(attachment => (
                             <div key={attachment.id}>{renderAttachment(attachment)}</div>
                         ))}
                     </div>
 
-                    <div className="px-8 py-4 bg-gray-50/50 border-t border-gray-100 flex items-center">
+                    <div className="px-8 py-4 bg-gray-50/50 dark:bg-gray-900/50 border-t border-gray-100 dark:border-gray-700 flex items-center">
                         <button 
                             onClick={handleLike}
                             className={`flex items-center space-x-2 px-4 py-2 rounded-full transition-all shadow-sm border ${
-                                hasLiked ? 'bg-orange-50 border-orange-200 text-orange-600' : 'bg-white border-gray-200 text-gray-600 hover:bg-gray-50'
+                                hasLiked ? 'bg-orange-50 dark:bg-orange-900/40 border-orange-200 dark:border-orange-800 text-orange-600 dark:text-orange-400' : 'bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700'
                             }`}
                         >
                             <Flame size={20} className={hasLiked ? 'fill-orange-500 text-orange-500' : ''} />
@@ -192,18 +192,18 @@ export default function SubmissionDetail({ auth, submission }) {
 
                 {/* Conversation Section */}
                 {canViewComments && (
-                    <div className="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden">
-                        <div className="px-8 py-6 border-b border-gray-100">
-                            <h3 className="text-xl font-bold text-gray-900 flex items-center">
+                    <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-sm border border-gray-100 dark:border-gray-700 overflow-hidden">
+                        <div className="px-8 py-6 border-b border-gray-100 dark:border-gray-700">
+                            <h3 className="text-xl font-bold text-gray-900 dark:text-white flex items-center">
                                 <MessageCircle className="mr-2 text-orange-500" />
                                 Percakapan Tertutup
                             </h3>
-                            <p className="text-sm text-gray-500 mt-1">Hanya Anda dan pihak kampus yang dapat melihat percakapan ini.</p>
+                            <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">Hanya Anda dan pihak kampus yang dapat melihat percakapan ini.</p>
                         </div>
                         
-                        <div className="p-8 bg-gray-50/30 space-y-6 max-h-[500px] overflow-y-auto">
+                        <div className="p-8 bg-gray-50/30 dark:bg-gray-900/30 space-y-6 max-h-[500px] overflow-y-auto">
                             {!submission?.comments || submission.comments.length === 0 ? (
-                                <div className="text-center py-8 text-gray-500">
+                                <div className="text-center py-8 text-gray-500 dark:text-gray-400">
                                     Belum ada tanggapan.
                                 </div>
                             ) : (
@@ -215,8 +215,8 @@ export default function SubmissionDetail({ auth, submission }) {
                                         <div key={comment.id} className={`flex ${isMe ? 'justify-end' : 'justify-start'}`}>
                                             <div className={`max-w-[80%] rounded-2xl p-4 ${
                                                 isMe ? 'bg-orange-500 text-white rounded-tr-sm' : 
-                                                isStaffComment ? 'bg-gray-800 text-white rounded-tl-sm' :
-                                                'bg-white border border-gray-200 text-gray-900 rounded-tl-sm'
+                                                isStaffComment ? 'bg-gray-800 dark:bg-gray-700 text-white rounded-tl-sm' :
+                                                'bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-900 dark:text-gray-100 rounded-tl-sm'
                                             }`}>
                                                 <div className={`text-xs mb-1 font-semibold ${isMe ? 'text-orange-100' : isStaffComment ? 'text-gray-300' : 'text-gray-500'}`}>
                                                     {comment?.user?.pseudonym} • {comment?.created_at && formatDistanceToNow(new Date(comment.created_at), { addSuffix: true, locale: localeId })}
@@ -237,7 +237,7 @@ export default function SubmissionDetail({ auth, submission }) {
                         </div>
 
                         {/* Comment Form */}
-                        <div className="p-6 bg-white border-t border-gray-100">
+                        <div className="p-6 bg-white dark:bg-gray-800 border-t border-gray-100 dark:border-gray-700">
                             <form onSubmit={handleComment} className="flex space-x-4">
                                 <div className="flex-1 relative">
                                     <textarea
@@ -245,7 +245,7 @@ export default function SubmissionDetail({ auth, submission }) {
                                         onChange={e => setData('content', e.target.value)}
                                         placeholder="Ketik tanggapan..."
                                         rows="1"
-                                        className="w-full pl-4 pr-12 py-3 bg-gray-50 border-transparent focus:bg-white focus:border-orange-500 focus:ring-orange-500 rounded-xl resize-none"
+                                        className="w-full pl-4 pr-12 py-3 bg-gray-50 dark:bg-gray-900 border-transparent dark:border-gray-700 dark:text-white focus:bg-white dark:focus:bg-gray-800 focus:border-orange-500 focus:ring-orange-500 rounded-xl resize-none"
                                     ></textarea>
                                     <label className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-orange-500 cursor-pointer p-2">
                                         <input type="file" className="hidden" onChange={e => setData('attachment', e.target.files[0])} />
@@ -267,9 +267,9 @@ export default function SubmissionDetail({ auth, submission }) {
             </div>
             {showEditModal && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-gray-900/50 backdrop-blur-sm">
-                    <div className="bg-white rounded-2xl w-full max-w-2xl overflow-hidden shadow-2xl max-h-[90vh] overflow-y-auto">
-                        <div className="px-6 py-4 border-b border-gray-100 flex justify-between items-center sticky top-0 bg-white z-10">
-                            <h3 className="text-xl font-bold text-gray-900">Edit Submisi</h3>
+                    <div className="bg-white dark:bg-gray-800 rounded-2xl w-full max-w-2xl overflow-hidden shadow-2xl max-h-[90vh] overflow-y-auto border border-gray-100 dark:border-gray-700">
+                        <div className="px-6 py-4 border-b border-gray-100 dark:border-gray-700 flex justify-between items-center sticky top-0 bg-white dark:bg-gray-800 z-10">
+                            <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100">Edit Submisi</h3>
                             <button onClick={() => setShowEditModal(false)} className="text-gray-400 hover:text-gray-600">
                                 <X size={24} />
                             </button>
@@ -277,14 +277,14 @@ export default function SubmissionDetail({ auth, submission }) {
                         <form onSubmit={handleEditSubmit} className="p-6">
                             <div className="space-y-6">
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-1">Kategori</label>
+                                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Kategori</label>
                                     <select
                                         value={editData.type}
                                         onChange={e => {
                                             setEditData('type', e.target.value);
                                             if (e.target.value === 'aspirasi') setEditData('visibility', 'public');
                                         }}
-                                        className="w-full border-gray-300 focus:border-orange-500 focus:ring-orange-500 rounded-md shadow-sm"
+                                        className="w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-orange-500 focus:ring-orange-500 rounded-md shadow-sm"
                                     >
                                         <option value="laporan">Laporan</option>
                                         <option value="aduan">Aduan</option>
@@ -295,11 +295,11 @@ export default function SubmissionDetail({ auth, submission }) {
 
                                 {editData.type !== 'aspirasi' && (
                                     <div>
-                                        <label className="block text-sm font-medium text-gray-700 mb-1">Privasi</label>
+                                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Privasi</label>
                                         <select
                                             value={editData.visibility}
                                             onChange={e => setEditData('visibility', e.target.value)}
-                                            className="w-full border-gray-300 focus:border-orange-500 focus:ring-orange-500 rounded-md shadow-sm"
+                                            className="w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-orange-500 focus:ring-orange-500 rounded-md shadow-sm"
                                         >
                                             <option value="private">Privat (Hanya Dosen/Admin)</option>
                                             <option value="public">Publik (Semua Orang)</option>
@@ -308,35 +308,35 @@ export default function SubmissionDetail({ auth, submission }) {
                                 )}
 
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-1">Judul</label>
+                                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Judul</label>
                                     <input
                                         type="text"
                                         value={editData.title}
                                         onChange={e => setEditData('title', e.target.value)}
-                                        className="w-full border-gray-300 focus:border-orange-500 focus:ring-orange-500 rounded-md shadow-sm"
+                                        className="w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-orange-500 focus:ring-orange-500 rounded-md shadow-sm"
                                         placeholder="Tuliskan judul secara singkat"
                                     />
                                     {editErrors.title && <p className="text-red-500 text-xs mt-1">{editErrors.title}</p>}
                                 </div>
 
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-1">Isi</label>
+                                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Isi</label>
                                     <textarea
                                         value={editData.content}
                                         onChange={e => setEditData('content', e.target.value)}
                                         rows="5"
-                                        className="w-full border-gray-300 focus:border-orange-500 focus:ring-orange-500 rounded-md shadow-sm"
+                                        className="w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-orange-500 focus:ring-orange-500 rounded-md shadow-sm"
                                         placeholder="Ceritakan secara detail..."
                                     ></textarea>
                                     {editErrors.content && <p className="text-red-500 text-xs mt-1">{editErrors.content}</p>}
                                 </div>
 
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-700 mb-1">Lampiran Tambahan (Opsional)</label>
+                                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Lampiran Tambahan (Opsional)</label>
                                     <input
                                         type="file"
                                         onChange={e => setEditData('attachment', e.target.files[0])}
-                                        className="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-orange-50 file:text-orange-700 hover:file:bg-orange-100"
+                                        className="w-full text-sm text-gray-500 dark:text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-orange-50 dark:file:bg-orange-900/30 file:text-orange-700 dark:file:text-orange-400 hover:file:bg-orange-100 dark:hover:file:bg-orange-900/50"
                                     />
                                     <p className="text-xs text-gray-500 mt-1">Mengunggah file baru akan menambahkannya ke lampiran saat ini.</p>
                                     {editErrors.attachment && <p className="text-red-500 text-xs mt-1">{editErrors.attachment}</p>}
@@ -344,7 +344,7 @@ export default function SubmissionDetail({ auth, submission }) {
                             </div>
                             
                             <div className="mt-8 flex justify-end space-x-3">
-                                <button type="button" onClick={() => setShowEditModal(false)} className="px-4 py-2 text-gray-600 hover:bg-gray-100 rounded-lg font-medium transition">
+                                <button type="button" onClick={() => setShowEditModal(false)} className="px-4 py-2 text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg font-medium transition">
                                     Batal
                                 </button>
                                 <button 

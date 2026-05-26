@@ -53,6 +53,9 @@ class SubmissionController extends Controller
             'type' => 'required|in:laporan,aduan,aspirasi',
             'visibility' => 'required|in:public,private',
             'attachment' => 'nullable|file|max:10240', // 10MB max
+            'terms' => 'accepted',
+        ], [
+            'terms.accepted' => 'Anda harus menyetujui syarat dan ketentuan yang berlaku.',
         ]);
 
         if ($validated['type'] === 'aspirasi') {

@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
         User::create([
             'name' => 'Super Admin',
             'email' => 'admin@sapa.test',
+            'email_verified_at' => now(),
             'password' => Hash::make('password'),
             'role' => 'admin',
             'pseudonym' => 'Admin Utama',
@@ -28,6 +29,7 @@ class DatabaseSeeder extends Seeder
         User::create([
             'name' => 'Dosen Pembimbing',
             'email' => 'dosen@sapa.test',
+            'email_verified_at' => now(),
             'password' => Hash::make('password'),
             'role' => 'dosen',
             'pseudonym' => 'Dosen 1',
