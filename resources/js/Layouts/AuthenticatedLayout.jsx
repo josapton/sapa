@@ -3,11 +3,22 @@ import Dropdown from '@/Components/Dropdown';
 import NavLink from '@/Components/NavLink';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
 import ThemeToggle from '@/Components/ThemeToggle';
-import { Link, usePage } from '@inertiajs/react';
+import { Link, usePage, router } from '@inertiajs/react';
 import { useState } from 'react';
+import { Bell, Check } from 'lucide-react';
 
 export default function AuthenticatedLayout({ header, children }) {
-    const user = usePage().props.auth.user;
+    const { user, notifications } = usePage().props.auth;
+
+    const unreadCount = notifications ? notifications.length : 0;
+
+    const markAsRead = (id) => {
+        router.post(route('notifications.mark_read', id), {}, { preserveScroll: true });
+    };
+
+    const markAllAsRead = () => {
+        router.post(route('notifications.mark_all_read'), {}, { preserveScroll: true });
+    };
 
     const [showingNavigationDropdown, setShowingNavigationDropdown] =
         useState(false);
@@ -26,10 +37,22 @@ export default function AuthenticatedLayout({ header, children }) {
 
                             <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                                 <NavLink
+                                    href={route('home')}
+                                    active={route().current('home')}
+                                >
+                                    Beranda
+                                </NavLink>
+                                <NavLink
                                     href={route('dashboard')}
                                     active={route().current('dashboard')}
                                 >
                                     Dashboard
+                                </NavLink>
+                                <NavLink
+                                    href={route('saved_submissions.index')}
+                                    active={route().current('saved_submissions.index')}
+                                >
+                                    Laporan Tersimpan
                                 </NavLink>
                                 {user.role === 'admin' && (
                                     <>
@@ -52,6 +75,52 @@ export default function AuthenticatedLayout({ header, children }) {
 
                         <div className="hidden sm:ms-6 sm:flex sm:items-center space-x-4">
                             <ThemeToggle />
+
+                            {/* Notifications Dropdown */}
+                            <div className="relative ms-3">
+                                <Dropdown>
+                                    <Dropdown.Trigger>
+                                        <button className="relative p-2 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 transition rounded-full hover:bg-gray-100 dark:hover:bg-gray-800">
+                                            <Bell size={20} />
+                                            {unreadCount > 0 && (
+                                                <span className="absolute top-1 right-1.5 flex h-2 w-2">
+                                                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                                                    <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
+                                                </span>
+                                            )}
+                                        </button>
+                                    </Dropdown.Trigger>
+
+                                    <Dropdown.Content align="right" width="80" contentClasses="py-1 bg-white dark:bg-gray-800">
+                                        <div className="px-4 py-3 border-b border-gray-100 dark:border-gray-700 flex justify-between items-center gap-2">
+                                            <h3 className="font-semibold text-gray-900 dark:text-white">Notifikasi</h3>
+                                            {unreadCount > 0 && (
+                                                <button onClick={markAllAsRead} className="text-xs text-orange-600 dark:text-orange-400 hover:underline flex items-center whitespace-nowrap shrink-0">
+                                                    <Check size={12} className="mr-1 shrink-0" /> Tandai semua dibaca
+                                                </button>
+                                            )}
+                                        </div>
+                                        <div className="max-h-80 overflow-y-auto">
+                                            {!notifications || notifications.length === 0 ? (
+                                                <div className="px-4 py-6 text-sm text-center text-gray-500 dark:text-gray-400">
+                                                    Belum ada notifikasi baru
+                                                </div>
+                                            ) : (
+                                                notifications.map((notif) => (
+                                                    <div key={notif.id} className="px-4 py-3 border-b border-gray-100 dark:border-gray-700/50 hover:bg-gray-50 dark:hover:bg-gray-700/50 cursor-pointer flex justify-between items-start" onClick={() => markAsRead(notif.id)}>
+                                                        <div>
+                                                            <p className="text-sm font-semibold text-gray-900 dark:text-white">{notif.data.title}</p>
+                                                            <p className="text-sm text-gray-600 dark:text-gray-400 mt-0.5">{notif.data.message}</p>
+                                                        </div>
+                                                        <div className="w-2 h-2 mt-1.5 rounded-full bg-orange-500 flex-shrink-0"></div>
+                                                    </div>
+                                                ))
+                                            )}
+                                        </div>
+                                    </Dropdown.Content>
+                                </Dropdown>
+                            </div>
+
                             <div className="relative ms-3">
                                 <Dropdown>
                                     <Dropdown.Trigger>
@@ -96,7 +165,54 @@ export default function AuthenticatedLayout({ header, children }) {
                             </div>
                         </div>
 
-                        <div className="-me-2 flex items-center sm:hidden">
+                        <div className="-me-2 flex items-center sm:hidden space-x-2">
+                            <ThemeToggle />
+                            
+                            {/* Mobile Notifications Dropdown */}
+                            <div className="relative">
+                                <Dropdown>
+                                    <Dropdown.Trigger>
+                                        <button className="relative p-2 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 transition rounded-full hover:bg-gray-100 dark:hover:bg-gray-800">
+                                            <Bell size={20} />
+                                            {unreadCount > 0 && (
+                                                <span className="absolute top-1 right-1.5 flex h-2 w-2">
+                                                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                                                    <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
+                                                </span>
+                                            )}
+                                        </button>
+                                    </Dropdown.Trigger>
+
+                                    <Dropdown.Content align="right" width="80" contentClasses="py-1 bg-white dark:bg-gray-800">
+                                        <div className="px-4 py-3 border-b border-gray-100 dark:border-gray-700 flex justify-between items-center gap-2">
+                                            <h3 className="font-semibold text-gray-900 dark:text-white">Notifikasi</h3>
+                                            {unreadCount > 0 && (
+                                                <button onClick={markAllAsRead} className="text-xs text-orange-600 dark:text-orange-400 hover:underline flex items-center whitespace-nowrap shrink-0">
+                                                    <Check size={12} className="mr-1 shrink-0" /> Tandai semua dibaca
+                                                </button>
+                                            )}
+                                        </div>
+                                        <div className="max-h-80 overflow-y-auto">
+                                            {!notifications || notifications.length === 0 ? (
+                                                <div className="px-4 py-6 text-sm text-center text-gray-500 dark:text-gray-400">
+                                                    Belum ada notifikasi baru
+                                                </div>
+                                            ) : (
+                                                notifications.map((notif) => (
+                                                    <div key={notif.id} className="px-4 py-3 border-b border-gray-100 dark:border-gray-700/50 hover:bg-gray-50 dark:hover:bg-gray-700/50 cursor-pointer flex justify-between items-start" onClick={() => markAsRead(notif.id)}>
+                                                        <div>
+                                                            <p className="text-sm font-semibold text-gray-900 dark:text-white">{notif.data.title}</p>
+                                                            <p className="text-sm text-gray-600 dark:text-gray-400 mt-0.5">{notif.data.message}</p>
+                                                        </div>
+                                                        <div className="w-2 h-2 mt-1.5 rounded-full bg-orange-500 flex-shrink-0"></div>
+                                                    </div>
+                                                ))
+                                            )}
+                                        </div>
+                                    </Dropdown.Content>
+                                </Dropdown>
+                            </div>
+
                             <button
                                 onClick={() =>
                                     setShowingNavigationDropdown(
@@ -147,10 +263,22 @@ export default function AuthenticatedLayout({ header, children }) {
                 >
                     <div className="space-y-1 pb-3 pt-2">
                         <ResponsiveNavLink
+                            href={route('home')}
+                            active={route().current('home')}
+                        >
+                            Beranda
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink
                             href={route('dashboard')}
                             active={route().current('dashboard')}
                         >
                             Dashboard
+                        </ResponsiveNavLink>
+                        <ResponsiveNavLink
+                            href={route('saved_submissions.index')}
+                            active={route().current('saved_submissions.index')}
+                        >
+                            Laporan Tersimpan
                         </ResponsiveNavLink>
                         {user.role === 'admin' && (
                             <>

@@ -13,7 +13,9 @@ return new class extends Migration
     {
         Schema::create('submissions', function (Blueprint $table) {
             $table->id();
+            $table->string('tracking_code')->unique()->nullable();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('category_id')->nullable()->constrained()->onDelete('set null');
             $table->enum('type', ['laporan', 'aduan', 'aspirasi']);
             $table->enum('visibility', ['public', 'private'])->default('private');
             $table->string('title');

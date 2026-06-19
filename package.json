@@ -24,6 +24,8 @@
     },
     "dependencies": {
         "date-fns": "^4.3.0",
-        "lucide-react": "^1.16.0"
+        "lucide-react": "^1.16.0",
+        "puppeteer": "^25.1.0",
+        "recharts": "^3.8.1"
     }
 }

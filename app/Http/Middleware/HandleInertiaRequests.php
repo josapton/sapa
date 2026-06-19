@@ -33,7 +33,9 @@ class HandleInertiaRequests extends Middleware
             ...parent::share($request),
             'auth' => [
                 'user' => $request->user(),
+                'notifications' => $request->user() ? $request->user()->unreadNotifications : [],
             ],
+            'client_ip' => $request->ip(),
         ];
     }
 }
