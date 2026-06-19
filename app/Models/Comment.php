@@ -12,7 +12,15 @@ class Comment extends Model
     protected $fillable = [
         'submission_id',
         'user_id',
+        'parent_id',
         'content',
+        'type',
+        'author_name',
+        'is_anonymous'
+    ];
+
+    protected $casts = [
+        'is_anonymous' => 'boolean'
     ];
 
     public function submission()
@@ -28,5 +36,15 @@ class Comment extends Model
     public function attachments()
     {
         return $this->morphMany(Attachment::class, 'attachable');
+    }
+
+    public function parent()
+    {
+        return $this->belongsTo(Comment::class, 'parent_id');
+    }
+
+    public function replies()
+    {
+        return $this->hasMany(Comment::class, 'parent_id')->with('user', 'replies');
     }
 }

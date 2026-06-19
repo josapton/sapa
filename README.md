@@ -2,7 +2,7 @@
   <img src="public/images/logo.png" width="150" alt="SAPA Logo">
 </p>
 
-# SAPA - Sistem Aduan Aspirasi dan Pelaporan Akademik
+# SAPA - Sistem Aspirasi dan Pengaduan Akademik
 
 SAPA adalah sebuah platform berbasis web yang dirancang khusus untuk mahasiswa agar dapat menyuarakan aspirasi, memberikan aduan, dan melaporkan permasalahan di lingkungan kampus secara aman dan terstruktur.
 
@@ -14,8 +14,10 @@ SAPA adalah sebuah platform berbasis web yang dirancang khusus untuk mahasiswa a
 - **Sistem Dukungan & Interaksi:** Mahasiswa lain dapat memberikan dukungan (_upvote_) dan memberikan komentar pada laporan yang bersifat publik.
 - **Manajemen Role & Hak Akses:** Sistem role-based access control (RBAC) memisahkan akses untuk Mahasiswa, Dosen, Admin, dan Super Admin dengan manajemen _user_ yang terpusat.
 - **Syarat dan Ketentuan Pelaporan:** Dilengkapi dengan persetujuan syarat & ketentuan (_Terms & Conditions_) sebelum membuat laporan untuk menjaga etika dan ketertiban.
+- **Halaman Legal & Informasi:** Dilengkapi dengan halaman Tentang Kami, Syarat & Ketentuan, dan Kebijakan Privasi yang dapat diakses secara dinamis melalui Footer interaktif.
 - **Keamanan:** Dilengkapi dengan verifikasi pendaftaran melalui sistem OTP (melalui Email) dan perlindungan formulir otentikasi menggunakan _Captcha_ Matematika.
 - **Tampilan Dinamis (Dark Mode):** Tampilan antarmuka (UI) yang modern, bersih (_clean_), responsif untuk perangkat mobile (dengan _floating dropdown menu_), dan mendukung mode gelap (_dark mode_) yang menyesuaikan dengan preferensi perangkat atau sistem operasi pengguna.
+- **Template Email Modern:** Semua notifikasi email (kode OTP dan pembaruan status laporan) menggunakan _layout_ yang terstruktur, menarik, dan sepenuhnya responsif di semua perangkat.
 
 ## Teknologi yang Digunakan
 - **Backend:** [Laravel 11](https://laravel.com)

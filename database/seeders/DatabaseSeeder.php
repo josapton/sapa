@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Category;
 use App\Models\PseudonymDictionary;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -45,6 +46,19 @@ class DatabaseSeeder extends Seeder
 
         foreach ($floras as $name) {
             PseudonymDictionary::create(['name' => $name, 'category' => 'flora']);
+        }
+
+        // Seed Categories
+        $categories = [
+            ['name' => 'Akademik', 'slug' => 'akademik', 'description' => 'Terkait perkuliahan, nilai, dan dosen'],
+            ['name' => 'Fasilitas', 'slug' => 'fasilitas', 'description' => 'Terkait gedung, AC, proyektor, parkir'],
+            ['name' => 'Pelayanan', 'slug' => 'pelayanan', 'description' => 'Terkait layanan tata usaha, akademik, dll'],
+            ['name' => 'Keamanan', 'slug' => 'keamanan', 'description' => 'Terkait keamanan lingkungan kampus'],
+            ['name' => 'Lainnya', 'slug' => 'lainnya', 'description' => 'Kategori lain yang tidak tercantum'],
+        ];
+
+        foreach ($categories as $cat) {
+            Category::create($cat);
         }
     }
 }
