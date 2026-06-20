@@ -13,7 +13,7 @@ jobs:
     environment: production
     steps:
     - name: Get latest code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
 
     - name: Setup PHP
       uses: shivammathur/setup-php@v2
@@ -25,9 +25,9 @@ jobs:
       run: composer install --no-dev --optimize-autoloader --no-interaction --prefer-dist
 
     - name: Setup Node.js
-      uses: actions/setup-node@v3
+      uses: actions/setup-node@v4
       with:
-        node-version: '20'
+        node-version: '22'
         
     - name: Install NPM Dependencies & Build Assets
       run: |
