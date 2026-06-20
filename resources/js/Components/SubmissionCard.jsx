@@ -110,7 +110,7 @@ export default function SubmissionCard({ submission, auth, onLike, onSave, isLin
                         {submission.attachments[0].mime_type.startsWith('image/') ? (
                             <div className="mt-2 rounded-xl overflow-hidden h-48 border border-gray-100 dark:border-gray-700">
                                 <img 
-                                    src={`/storage/${submission.attachments[0].file_path}`} 
+                                    src={`/berkas/${submission.attachments[0].file_path}`} 
                                     alt="Lampiran" 
                                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                                 />

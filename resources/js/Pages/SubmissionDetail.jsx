@@ -39,7 +39,7 @@ const InternalComment = ({ comment, auth, onReply }) => {
                     <p className="whitespace-pre-wrap">{comment.content}</p>
                     {comment?.attachments?.map(att => (
                         <div key={att.id} className="mt-2">
-                            <a href={`/storage/${att.file_path}`} target="_blank" rel="noreferrer" className="text-xs underline flex items-center space-x-1">
+                            <a href={`/berkas/${att.file_path}`} target="_blank" rel="noreferrer" className="text-xs underline flex items-center space-x-1">
                                 <File size={14} /> <span>{att.file_name}</span>
                             </a>
                         </div>
@@ -179,7 +179,7 @@ export default function SubmissionDetail({ auth, submission, categories = [], ca
 
     const renderAttachment = (attachment) => {
         const isImage = attachment.mime_type?.startsWith('image/');
-        const url = `/storage/${attachment.file_path}`;
+        const url = `/berkas/${attachment.file_path}`;
         
         if (isImage) {
             return (
