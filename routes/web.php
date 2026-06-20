@@ -15,6 +15,25 @@ Route::get('/', [SubmissionController::class, 'index'])->name('home');
 
 // Static Pages
 Route::get('/tentang', function () { return Inertia::render('About'); })->name('about');
+Route::get('/setup-symlink', function () {
+    try {
+        // Try native symlink first
+        $target = storage_path('app/public');
+        $link = public_path('storage');
+        if (!file_exists($link)) {
+            symlink($target, $link);
+        }
+        return 'Symlink created natively!';
+    } catch (\Exception $e) {
+        try {
+            // Fallback to Artisan
+            \Illuminate\Support\Facades\Artisan::call('storage:link');
+            return 'Symlink created via Artisan!';
+        } catch (\Exception $e2) {
+            return 'Error: ' . $e2->getMessage();
+        }
+    }
+});
 Route::get('/syarat', function () { return Inertia::render('Terms'); })->name('terms');
 Route::get('/privasi', function () { return Inertia::render('Privacy'); })->name('privacy');
 
