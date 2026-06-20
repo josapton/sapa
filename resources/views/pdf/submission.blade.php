@@ -100,7 +100,7 @@
                 @endphp
                 <div style="margin-bottom: 10px; border: 1px solid #ccc; padding: 5px; text-align: center;">
                     @if($isImage)
-                        <img src="{{ public_path('storage/' . $attachment->file_path) }}" style="max-width: 100%; max-height: 300px; display: block; margin: 0 auto;" alt="Lampiran">
+                        <img src="{{ storage_path('app/public/' . $attachment->file_path) }}" style="max-width: 100%; max-height: 300px; display: block; margin: 0 auto;" alt="Lampiran">
                     @else
                         <p style="margin: 0; padding: 10px; background-color: #f9f9f9;">
                             &#128196; <strong>File Terlampir:</strong> {{ basename($attachment->file_path) }}
