@@ -17,23 +17,32 @@ Route::get('/', [SubmissionController::class, 'index'])->name('home');
 Route::get('/tentang', function () { return Inertia::render('About'); })->name('about');
 Route::get('/setup-symlink', function () {
     try {
-        // Try native symlink first
-        $target = storage_path('app/public');
         $link = public_path('storage');
-        if (!file_exists($link)) {
-            symlink($target, $link);
+        // If symlink exists but is broken or forbidden, delete it.
+        if (is_link($link) || file_exists($link)) {
+            if (is_dir($link) && !is_link($link)) {
+                rmdir($link);
+            } else {
+                unlink($link);
+            }
         }
-        return 'Symlink created natively!';
+        return 'Symlink dihapus! Fitur route storage alternatif siap digunakan.';
     } catch (\Exception $e) {
-        try {
-            // Fallback to Artisan
-            \Illuminate\Support\Facades\Artisan::call('storage:link');
-            return 'Symlink created via Artisan!';
-        } catch (\Exception $e2) {
-            return 'Error: ' . $e2->getMessage();
-        }
+        return 'Error: ' . $e->getMessage();
     }
 });
+
+// Alternatif untuk menampilkan file storage jika symlink dilarang oleh Shared Hosting
+Route::get('storage/{path}', function ($path) {
+    if (str_contains($path, '..')) {
+        return 'HIT 403';
+    }
+    $filePath = storage_path('app/public/' . $path);
+    if (!file_exists($filePath)) {
+        return 'HIT 404: ' . $filePath;
+    }
+    return response()->file($filePath);
+})->where('path', '.*');
 Route::get('/syarat', function () { return Inertia::render('Terms'); })->name('terms');
 Route::get('/privasi', function () { return Inertia::render('Privacy'); })->name('privacy');
 
