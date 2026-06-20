@@ -33,13 +33,13 @@ Route::get('/setup-symlink', function () {
 });
 
 // Alternatif untuk menampilkan file storage jika symlink dilarang oleh Shared Hosting
-Route::get('storage/{path}', function ($path) {
+Route::get('berkas/{path}', function ($path) {
     if (str_contains($path, '..')) {
-        return 'HIT 403';
+        abort(403);
     }
     $filePath = storage_path('app/public/' . $path);
     if (!file_exists($filePath)) {
-        return 'HIT 404: ' . $filePath;
+        abort(404);
     }
     return response()->file($filePath);
 })->where('path', '.*');
