@@ -134,7 +134,7 @@ export default function SubmissionCard({ submission, auth, onLike, onSave, isLin
                             if (onLike) {
                                 onLike(submission.id);
                             } else {
-                                router.post(route('submissions.like', submission.id), {}, { preserveScroll: true });
+                                router.post(route('likes.toggle', submission.id), {}, { preserveScroll: true });
                             }
                         }}
                         className={`flex items-center space-x-1.5 px-3 py-1.5 rounded-xl transition-all border ${
