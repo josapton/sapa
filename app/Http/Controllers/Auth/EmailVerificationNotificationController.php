@@ -26,7 +26,11 @@ class EmailVerificationNotificationController extends Controller
             'otp_expires_at' => now()->addMinutes(10)
         ]);
 
-        Mail::to($user)->send(new OtpMail($otpCode));
+        try {
+            Mail::to($user)->send(new OtpMail($otpCode));
+        } catch (\Exception $e) {
+            \Illuminate\Support\Facades\Log::error('Failed to resend OTP email: ' . $e->getMessage());
+        }
 
         return back()->with('status', 'verification-link-sent');
     }

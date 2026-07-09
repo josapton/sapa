@@ -52,7 +52,7 @@ Route::get('/lacak', [SubmissionController::class, 'track'])->name('submissions.
 Route::post('/lacak', [SubmissionController::class, 'trackLookup'])->name('submissions.track_lookup');
 Route::get('/lacak/{tracking_code}', [SubmissionController::class, 'trackResult'])->name('submissions.track_result');
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', [SubmissionController::class, 'dashboard'])->name('dashboard');
     Route::get('/tersimpan', [SavedSubmissionController::class, 'index'])->name('saved_submissions.index');
     Route::post('/submissions/{submission}/save', [SavedSubmissionController::class, 'toggle'])->name('saved_submissions.toggle');
