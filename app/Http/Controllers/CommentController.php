@@ -6,9 +6,12 @@ use App\Models\Comment;
 use App\Models\Submission;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Traits\OptimizesImages;
 
 class CommentController extends Controller
 {
+    use OptimizesImages;
+
     public function store(Request $request, Submission $submission)
     {
         $user = Auth::user();
@@ -37,12 +40,12 @@ class CommentController extends Controller
 
         if ($request->hasFile('attachment')) {
             $file = $request->file('attachment');
-            $path = $file->store('attachments', 'public');
+            $optimized = $this->optimizeAndStoreImage($file);
             
             $comment->attachments()->create([
-                'file_path' => $path,
-                'file_name' => $file->getClientOriginalName(),
-                'mime_type' => $file->getClientMimeType(),
+                'file_path' => $optimized['file_path'],
+                'file_name' => $optimized['file_name'],
+                'mime_type' => $optimized['mime_type'],
             ]);
         }
         

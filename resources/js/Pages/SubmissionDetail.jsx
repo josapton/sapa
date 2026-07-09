@@ -183,8 +183,14 @@ export default function SubmissionDetail({ auth, submission, categories = [], ca
         
         if (isImage) {
             return (
-                <div className="mt-4 rounded-xl overflow-hidden border border-gray-100 max-w-md">
-                    <img src={url} alt="Attachment" className="w-full h-auto object-cover" />
+                <div className="rounded-xl overflow-hidden shadow-sm border border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-gray-900/50 flex justify-center">
+                    <img 
+                        src={url} 
+                        alt="Attachment" 
+                        loading="lazy"
+                        decoding="async"
+                        className="w-full h-auto object-contain max-h-[80vh]" 
+                    />
                 </div>
             );
         }

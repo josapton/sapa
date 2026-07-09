@@ -11,9 +11,12 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\SubmissionStatusUpdated;
 use Illuminate\Support\Str;
 use Barryvdh\DomPDF\Facade\Pdf;
+use App\Traits\OptimizesImages;
 
 class SubmissionController extends Controller
 {
+    use OptimizesImages;
+
     public function index(Request $request)
     {
         // Fetch all categories for filter options
@@ -190,12 +193,12 @@ class SubmissionController extends Controller
 
         if ($request->hasFile('attachments')) {
             foreach ($request->file('attachments') as $file) {
-                $path = $file->store('attachments', 'public');
+                $optimized = $this->optimizeAndStoreImage($file);
                 
                 $submission->attachments()->create([
-                    'file_path' => $path,
-                    'file_name' => $file->getClientOriginalName(),
-                    'mime_type' => $file->getClientMimeType(),
+                    'file_path' => $optimized['file_path'],
+                    'file_name' => $optimized['file_name'],
+                    'mime_type' => $optimized['mime_type'],
                 ]);
             }
         }
@@ -239,12 +242,12 @@ class SubmissionController extends Controller
             // Delete old attachments if new ones are uploaded? For now, we just append or assume the frontend handles it. 
             // In a real scenario, we might want to let users delete specific attachments, but let's stick to appending or replacing.
             foreach ($request->file('attachments') as $file) {
-                $path = $file->store('attachments', 'public');
+                $optimized = $this->optimizeAndStoreImage($file);
                 
                 $submission->attachments()->create([
-                    'file_path' => $path,
-                    'file_name' => $file->getClientOriginalName(),
-                    'mime_type' => $file->getClientMimeType(),
+                    'file_path' => $optimized['file_path'],
+                    'file_name' => $optimized['file_name'],
+                    'mime_type' => $optimized['mime_type'],
                 ]);
             }
         }

@@ -112,6 +112,8 @@ export default function SubmissionCard({ submission, auth, onLike, onSave, isLin
                                 <img 
                                     src={`/berkas/${submission.attachments[0].file_path}`} 
                                     alt="Lampiran" 
+                                    loading="lazy"
+                                    decoding="async"
                                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                                 />
                             </div>

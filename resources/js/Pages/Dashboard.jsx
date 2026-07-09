@@ -201,6 +201,20 @@ export default function Dashboard({ auth, submissions, categories, filters, char
                 </div>
             </div>
 
+            {/* Processing Overlay */}
+            {processing && (
+                <div className="fixed inset-0 z-[60] flex items-center justify-center bg-gray-900/60 backdrop-blur-sm">
+                    <div className="bg-white dark:bg-gray-800 rounded-2xl p-8 flex flex-col items-center space-y-4 shadow-2xl">
+                        <svg className="animate-spin h-10 w-10 text-orange-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                        <p className="text-gray-700 dark:text-gray-200 font-semibold text-lg">Mengunggah laporan...</p>
+                        <p className="text-gray-500 dark:text-gray-400 text-sm">Mohon tunggu, file sedang diunggah</p>
+                    </div>
+                </div>
+            )}
+
             {/* Modal Create */}
             {showModal && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-gray-900/50 backdrop-blur-sm">
@@ -361,9 +375,15 @@ export default function Dashboard({ auth, submissions, categories, filters, char
                                 <button 
                                     type="submit" 
                                     disabled={processing}
-                                    className="px-6 py-2 bg-orange-500 hover:bg-orange-600 text-white rounded-lg font-medium shadow-md shadow-orange-500/30 transition disabled:opacity-50"
+                                    className="px-6 py-2 bg-orange-500 hover:bg-orange-600 text-white rounded-lg font-medium shadow-md shadow-orange-500/30 transition disabled:opacity-50 flex items-center space-x-2"
                                 >
-                                    {processing ? 'Mengirim...' : 'Kirim'}
+                                    {processing && (
+                                        <svg className="animate-spin h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                        </svg>
+                                    )}
+                                    <span>{processing ? 'Mengirim...' : 'Kirim'}</span>
                                 </button>
                             </div>
                         </form>

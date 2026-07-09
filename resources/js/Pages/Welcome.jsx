@@ -137,7 +137,13 @@ export default function Welcome({ auth, submissions, stats, categories, filters 
                             </p>
                         </div>
                         <div className="flex-1 w-full max-w-lg mx-auto lg:max-w-none px-4 sm:px-8 lg:px-0">
-                            <img src="/images/hero.png" alt="Ilustrasi mahasiswa dengan megafon" className="w-full h-auto drop-shadow-2xl hover:-translate-y-2 transition-transform duration-500 ease-out object-cover rounded-3xl" />
+                            <img 
+                                src="/images/hero.png" 
+                                alt="Ilustrasi mahasiswa dengan megafon" 
+                                loading="lazy"
+                                decoding="async"
+                                className="w-full h-auto drop-shadow-2xl hover:-translate-y-2 transition-transform duration-500 ease-out object-cover rounded-3xl" 
+                            />
                         </div>
                     </div>
 
